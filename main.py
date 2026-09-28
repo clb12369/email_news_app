@@ -21,10 +21,10 @@ headers = {
 }
 
 # Make the request
-request = requests.get(url, headers=headers)
+response = requests.get(url, headers=headers)
 
 # Get content in JSON (dictionary) format
-content = request.json()
+content = response.json()
 
 
 # Access the article titles
