@@ -12,9 +12,10 @@ api_key = os.environ.get("API_KEY")
 # Set up date, URL, and headers
 topic = "tesla"
 date = "2026-09-01"
-url = f"https://newsapi.org/v2/everything?q={topic}&" \
+url = "https://newsapi.org/v2/everything?" \
+      f"q={topic}&" \
       f"from={date}&sortBy=publishedAt&" \
-      f"apiKey={api_key}"
+      f"apiKey={api_key}&language=en"
 headers = {
     'User-Agent': 'Mozilla/5.0'
 }
@@ -28,9 +29,13 @@ content = request.json()
 
 # Access the article titles
 body = ""
-for article in content["articles"]:
+for article in content["articles"][:20]:
     if article["title"] is not None:
-        body = body + article["title"] + "\n" + article["description"] + "\n" * 2
+        body = ("Subject: Today's news" + "\n"
+                + body + article["title"] + "\n"
+                + article["description"]+ "\n"
+                + article["url"] + "\n" * 2)
 
-body = body.encode("utf-8")
-send_email(message=body)
+print(body)
+# body = body.encode("utf-8")
+# send_email(message=body)
